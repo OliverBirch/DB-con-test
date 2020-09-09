@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    title #{title}
+    a(href="students/add").waves-effect.waves-light.btn-small.right.vertical-align
+        i.material-icons.large add 
+        p Tilføj Kursist
+    h2 Kursister
+    if messages.error 
+        .message.error.red-text
+        span= messages.error
+    include searchbar
+    ul#student-list
+        each student of students
+            li: a(href='students/id/'+student.id)= student.first_name + " " + student.last_name

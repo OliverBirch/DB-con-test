@@ -1,0 +1,60 @@
+extends layout
+
+block content    
+    .section
+        .container
+            form(action="approve", method="post").col.s12
+                .section Kursistoplysninger
+                .row.small
+                    .input-field.col.s4
+                        input.validate(type="text" name="first_name" placeholder=" " value=`${student.first_name}`)
+                        label(for="first_name") Fornavn
+                    .input-field.col.s4
+                        input.validate(type="text" name="last_name" placeholder=" " value=`${student.last_name}`)
+                        label(for="last_name") Efternavn
+                .row.small
+                    .input-field.col.s4
+                        input.validate(type="text" name="adress" placeholder=" " value=`${student.street}`)
+                        label(for="adress") Adresse
+                    .input-field.col.s3
+                        input.validate(type="text" name="city" placeholder=" " value=`${student.city}`)
+                        label(for="city") By
+                    .input-field.col.s3
+                        input.validate(type="text" name="post_code" placeholder=" " value=`${student.post_code}`)
+                        label(for="post_code") Postnummer
+                .row.small                
+                    .input-field.col.s6
+                        input.validate(type="text" name="email" placeholder="email@adresse.dk" value=`${student.email}`)
+                        label(for="email") Email
+                    .input-field.col.s4
+                        input.validate(type="text" name="phone" placeholder=" " value=`${student.phone}`)
+                        label(for="phone") Telefon
+                .row.small
+                    if (student.own_pc == undefined || student.own_pc == 0)
+                        label(for="own_pc").indent
+                            input(type="checkbox" id="own_pc" name="own_pc")
+                            span Egen PC?
+                    else if (student.own_pc == 1)
+                        label(for="own_pc").indent
+                            input(type="checkbox" id="own_pc" name="own_pc" value='true' checked)
+                            span Egen PC?
+                    .input-field.col.s6
+                        input(type="text" name="comment" placeholder=" " value=`${student.comment}`)
+                        label(for="comment") Kommentar
+                br 
+                .section Firmaoplysninger
+                .row.small
+                    .input-field.col.s6
+                        input.validate(type="text" name="company_name" placeholder=" " value=`${student.company_name}`)
+                        label(for="company_name") Firmanavn
+                    .input-field.col.s4
+                        input.validate(type="text" name="company_street" placeholder=" " value=`${student.company_street}`)
+                        label(for="company_street") Adresse
+                .row.small
+                    .input-field.col.s4
+                        input.validate(type="text" name="company_city" placeholder=" " value=`${student.city}`)
+                        label(for="company_city") By
+                    .input-field.col.s4
+                        input.validate(type="text" name="company_post_code" placeholder=" " value=`${student.company_post_code}`)
+                        label(for="first_name") Postnummer
+                    button.btn.waves-effect.waves-light.col.offset.s10(type="submit") Tilføj

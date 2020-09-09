@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title= title
+    link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(rel="stylesheet", href="/stylesheets/materialize.css")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+
+  body
+    nav.gk-red
+      .nav-wrapper
+        a(href="/").brand-logo
+          img(src="/images/uokpl.rs-samsung-logo-png-4078663.png", alt="Hjem").logo
+        ul#nav-mobile.right.hide-on-med-and-down
+          li: a(href="/companies") Firmaer
+          li: a(href="/students") Kursister
+          if (!user)
+            li: a(href="/login") Log ind
+    script(src="/javascripts/materialize.js")
+    .container
+      block content

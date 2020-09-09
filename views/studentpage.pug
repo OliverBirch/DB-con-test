@@ -1,0 +1,28 @@
+extends layout
+
+block content    
+    .container
+        h3= student.first_name + ' ' + student.last_name
+        table.striped
+            tbody
+                tr: td Adresse 
+                    td= student.street
+                tr: td Postnummer
+                    td= student.post_code
+                tr: td By
+                    td= student.city
+                tr: td Email
+                    td= student.email
+                tr: td Tlf.
+                    td= student.phone
+                tr: td Bemærkninger
+                    td= student.comment
+                tr: td Egen pc? 
+                    td= student.own_pc
+
+
+
+
+
+
+

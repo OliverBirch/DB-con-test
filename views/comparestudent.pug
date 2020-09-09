@@ -1,0 +1,122 @@
+extends layout
+
+block content
+    if messages.error 
+        .message.error
+        span= messages.error
+    .row.col.s12
+        //- DEN GAMLE KURSIST
+        form(action="/", method="post").col.s6
+            h5 Før
+            .section Kursistoplysninger
+            .row.small
+                .input-field.col.s4
+                    input.validate(type="text" name="first_name" placeholder=" " value=`${oldStudent.first_name}` disabled)
+                    label(for="first_name") Fornavn
+                .input-field.col.s4
+                    input.validate(type="text" name="last_name" placeholder=" " value=`${oldStudent.last_name}` disabled)
+                    label(for="last_name") Efternavn
+            .row.small
+                .input-field.col.s4
+                    input.validate(type="text" name="adress" placeholder=" " value=`${oldStudent.street}` disabled)
+                    label(for="adress") Adresse
+                .input-field.col.s3
+                    input.validate(type="text" name="city" placeholder=" " value=`${oldStudent.city}` disabled)
+                    label(for="city") By
+                .input-field.col.s3
+                    input.validate(type="text" name="post_code" placeholder=" " value=`${oldStudent.post_code}` disabled)
+                    label(for="post_code") Postnummer
+            .row.small                
+                .input-field.col.s6
+                    input.validate(type="text" name="email" placeholder="email@adresse.dk" value=`${oldStudent.email}` disabled)
+                    label(for="email") Email
+                .input-field.col.s4
+                    input.validate(type="text" name="phone" placeholder=" " value=`${oldStudent.phone}` disabled)
+                    label(for="phone") Telefon
+            .row.small
+                if (oldStudent.own_pc == undefined || oldStudent.own_pc == 0)
+                    label(for="own_pc").indent
+                        input(type="checkbox" id="own_pc" name="own_pc" disabled)
+                        span Egen PC?
+                else if (oldStudent.own_pc == 1)
+                    label(for="own_pc").indent
+                        input(type="checkbox" id="own_pc" name="own_pc" value='true' checked disabled)
+                        span Egen PC?
+                .input-field.col.s6
+                    input(type="text" name="comment" placeholder=" " value=`${oldStudent.comment}` disabled)
+                    label(for="comment") Kommentar
+            br 
+            .section Firmaoplysninger
+            .row.small
+                .input-field.col.s6
+                    input.validate(type="text" name="company_name" placeholder=" " value=`${oldStudent.company_name}` disabled)
+                    label(for="company_name") Firmanavn
+                .input-field.col.s4
+                    input.validate(type="text" name="company_street" placeholder=" " value=`${oldStudent.company_street}` disabled)
+                    label(for="company_street") Adresse
+            .row.small
+                .input-field.col.s4
+                    input.validate(type="text" name="company_city" placeholder=" " value=`${oldStudent.city}` disabled)
+                    label(for="company_city") By
+                .input-field.col.s4
+                    input.validate(type="text" name="company_post_code" placeholder=" " value=`${oldStudent.company_post_code}` disabled)
+                    label(for="first_name") Postnummer
+        //- DEN NYE KURSIST
+        form(action="compare", method="post").col.s6
+            h5 Efter
+            .section Kursistoplysninger
+            .row.small
+                .input-field.col.s4
+                    input.validate(type="text" name="first_name" placeholder=" " value=`${newStudent.first_name}`)
+                    label(for="first_name") Fornavn
+                .input-field.col.s4
+                    input.validate(type="text" name="last_name" placeholder=" " value=`${newStudent.last_name}`)
+                    label(for="last_name") Efternavn
+            .row.small
+                .input-field.col.s4
+                    input.validate(type="text" name="adress" placeholder=" " value=`${newStudent.adress}`)
+                    label(for="adress") Adresse
+                .input-field.col.s3
+                    input.validate(type="text" name="city" placeholder=" " value=`${newStudent.city}`)
+                    label(for="city") By
+                .input-field.col.s3
+                    input.validate(type="text" name="post_code" placeholder=" " value=`${newStudent.post_code}`)
+                    label(for="post_code") Postnummer
+            .row.small                
+                .input-field.col.s6
+                    input.validate(type="text" name="email" placeholder="email@adresse.dk" value=`${newStudent.email}`)
+                    label(for="email") Email
+                .input-field.col.s4
+                    input.validate(type="text" name="phone" placeholder=" " value=`${newStudent.phone}`)
+                    label(for="phone") Telefon
+            .row.small
+                if (newStudent.own_pc == undefined || newStudent.own_pc == 0)
+                    label(for="own_pc").indent
+                        input(type="checkbox" id="own_pc" name="own_pc")
+                        span Egen PC?
+                else if (newStudent.own_pc == 1)
+                    label(for="own_pc").indent
+                        input(type="checkbox" id="own_pc" name="own_pc" value='true' checked)
+                        span Egen PC?
+                .input-field.col.s6
+                    input(type="text" name="comment" placeholder=" " value=`${newStudent.comment}`)
+                    label(for="comment") Kommentar
+            br 
+            .section Firmaoplysninger
+            .row.small
+                .input-field.col.s6
+                    input.validate(type="text" name="company_name" placeholder=" " value=`${newStudent.company_name}`)
+                    label(for="company_name") Firmanavn
+                .input-field.col.s4
+                    input.validate(type="text" name="company_street" placeholder=" " value=`${newStudent.company_street}`)
+                    label(for="company_street") Adresse
+            .row.small
+                .input-field.col.s4
+                    input.validate(type="text" name="company_city" placeholder=" " value=`${newStudent.city}`)
+                    label(for="company_city") By
+                .input-field.col.s4
+                    input.validate(type="text" name="company_post_code" placeholder=" " value=`${newStudent.company_post_code}`)
+                    label(for="first_name") Postnummer
+                button.btn.waves-effect.waves-light.col.offset.s10(type="submit") Opdater
+
+    

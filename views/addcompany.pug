@@ -1,0 +1,43 @@
+
+extends layout
+
+block content
+    h2 Tilføj firma
+    .row
+    form(action="/companies", method="post").col.s12
+        .row.small
+            .input-field.col.s4
+                input.validate(type="text", name="name" placeholder=" ")
+                label(for="name") Firma navn
+            .input-field.col.s4
+                input.validate(type="text", name="address" placeholder=" ")
+                label(for="address") Adresse
+        .row.small
+            .input-field.col.s4
+                input.validate(type="text", name="city" placeholder=" ")
+                label(for="city") By
+            .input-field.col.s4
+                input.validate(type="text", name="postcode" placeholder=" ")
+                label(for="postcode") Postnummer   
+        .row.small
+            .input-field.col.s4
+                input.validate(type="text", name="contact" placeholder=" ")
+                label(for="contact") Kontaktperson
+            .input-field.col.s4
+                input.validate(type="text", name="phone" placeholder=" ")
+                label(for="phone") Tlf.
+        .row.small
+            .input-field.col.s4
+                input.validate(type="text", name="email", placeholder="email@adresse.dk")
+                label(for="email") Email
+            .input-field.col.s4
+                input.validate(type="text", name="eanno" placeholder=" ")
+                label(for="eanno") EAN 
+        .row.small
+            .input-field.col.s8
+                input.validate(type="text", name="comment"  placeholder=" ")
+                label(for="comment") Kommentar
+            button.btn.waves-effect.waves-light.col.offset.s8(type="submit") Tilføj
+
+
+        

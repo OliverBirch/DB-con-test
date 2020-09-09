@@ -1,0 +1,16 @@
+extends layout
+
+block content    
+    .container
+        h3= company.name
+        ul.collection
+            li.collection-item Adresse: #{company.street}
+            li.collection-item Postnummer: #{company.post_code}
+            li.collection-item By: #{company.city}
+            li.collection-item Tilføjet: #{company.created_at}
+            li.collection-item Kontaktperson: #{company.contact}
+            li.collection-item Tlf. nr.: #{company.phone}
+            li.collection-item Email: #{company.email}
+            li.collection-item EAN: #{company.eanno}
+            li.collection-item Kommentar: #{company.comment}
+

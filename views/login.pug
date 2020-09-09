@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    title Log ind
+    .row
+        .card.col.offset-s3.s6.center
+            .card-content
+                h4.center Log ind
+                if messages.error 
+                    .message.error
+                    span= messages.error
+                form(action="/", method="post").login-form
+                    .input-field.col.s12
+                        input(type="text" name="username")
+                        label(for="username") Brugernavn
+                    .input-field.col.s12
+                        input(type="password" name="password")
+                        label(for="password") Password
+                    button.btn(type="submit") login

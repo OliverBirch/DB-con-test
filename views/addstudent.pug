@@ -1,0 +1,75 @@
+extends layout
+
+block content
+    title= title
+    h2= title
+    .section 
+        .card
+            .card-content 
+                if messages.error 
+                    p= messages.error
+                p Find kursist fra webshop
+                br
+                form(action="add/approve", method="get").col.s12
+                    .row.vertical-align
+                        .input-field.inline.col
+                            input(type="text" name="order" placeholder=" ")
+                            label(for="order") Ordrenummer
+                        button(type="submit").btn.waves-effect.waves-light Find
+    .section
+        button.btn.tab.vertical-align 
+            i.material-icons arrow_downward
+            p Tilføj manuelt
+        .card.collapsible-card.hidden
+            .card-content
+                form(action="/students/add", method="post").col.s12
+                    .section Kursistoplysninger
+                    .row.small
+                        .input-field.col.s4
+                            input.validate(type="text" name="first_name" placeholder=" ")
+                            label(for="first_name") Fornavn
+                        .input-field.col.s4
+                            input.validate(type="text" name="last_name" placeholder=" ")
+                            label(for="last_name") Efternavn
+                    .row.small
+                        .input-field.col.s4
+                            input.validate(type="text" name="adress" placeholder=" ")
+                            label(for="adress") Adresse
+                        .input-field.col.s3
+                            input.validate(type="text" name="city" placeholder=" ")
+                            label(for="city") By
+                        .input-field.col.s3
+                            input.validate(type="text" name="post_code" placeholder=" ")
+                            label(for="post_code") Postnummer
+                    .row.small                
+                        .input-field.col.s6
+                            input.validate(type="text" name="email" placeholder="email@adresse.dk")
+                            label(for="email") Email
+                        .input-field.col.s4
+                            input.validate(type="text" name="phone" placeholder=" ")
+                            label(for="phone") Telefon
+                    .row.small
+                        label(for="own_pc").indent
+                            input(type="checkbox" id="own_pc")
+                            span Egen PC?
+                        .input-field.col.s6
+                            input(type="text" name="comment" placeholder=" ")
+                            label(for="comment") Kommentar
+                    br 
+                    .section Firmaoplysninger
+                    .row.small
+                        .input-field.col.s6
+                            input.validate(type="text" name="company_name" placeholder=" ")
+                            label(for="company_name") Firmanavn
+                        .input-field.col.s4
+                            input.validate(type="text" name="company_street" placeholder=" ")
+                            label(for="company_street") Adresse
+                    .row.small
+                        .input-field.col.s4
+                            input.validate(type="text" name="company_city" placeholder=" ")
+                            label(for="company_city") By
+                        .input-field.col.s4
+                            input.validate(type="text" name="company_post_code" placeholder=" ")
+                            label(for="first_name") Postnummer
+                        button.btn.waves-effect.waves-light.col.offset.s10(type="submit") Tilføj
+        script(src="/javascripts/addstudent.js")
