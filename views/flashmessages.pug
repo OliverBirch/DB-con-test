@@ -1,0 +1,11 @@
+.row
+    .flash-messages.col.s6.offset-s3
+        if messages.success
+            .success.message.center.z-depth-1
+                span= messages.success
+                span: i.material-icons.close clear
+        if messages.error 
+            .error.message.center.z-depth-1
+                span= messages.error
+                span: i.material-icons.close clear
+

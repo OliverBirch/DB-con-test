@@ -1,0 +1,87 @@
+extends layout
+
+block content
+    include flashmessages
+    .row.col.s12
+        //- DET GAMLE FIRMA
+        form(method="post").col.s6
+            h5 Før
+            .row.small
+                .input-field.col.s9
+                    input.validate(type="text", name="name" placeholder=" " value=`${oldCompany.name}` disabled)
+                    label(for="name") Firma navn
+            .row.small
+                .input-field.col.s4
+                    input.validate(type="text", name="address" placeholder=" " value=`${oldCompany.street}` disabled)
+                    label(for="address") Adresse
+                .input-field.col.s3
+                    input.validate(type="text", name="city" placeholder=" " value=`${oldCompany.city}` disabled)
+                    label(for="city") By
+                .input-field.col.s2
+                    input.validate(type="text", name="postcode" placeholder=" " value=`${oldCompany.post_code}` disabled)
+                    label(for="postcode") Postnummer   
+            .row.small
+                .input-field.col.s6
+                    input.validate(type="text", name="contact" placeholder=" " value=`${oldCompany.contact}` disabled)
+                    label(for="contact") Kontaktperson
+                .input-field.col.s3
+                    input.validate(type="text", name="phone" placeholder=" " value=`${oldCompany.phone}` disabled)
+                    label(for="phone") Tlf.
+            .row.small
+                .input-field.col.s9
+                    input.validate(type="text", name="email", placeholder="email@adresse.dk" value=`${oldCompany.email}` disabled)
+                    label(for="email") Email
+            .row.small
+                .input-field.col.s4
+                    input.validate(type="text", name="eanno" placeholder=" " value=`${oldCompany.eanno}` disabled)
+                    label(for="eanno") EAN 
+                .input-field.col.s1
+                .input-field.col.s4
+                    input.validate(type="text", name="cvr"  placeholder=" " value=`${oldCompany.cvr}` disabled)
+                    label(for="cvr") CVR
+            .row.small
+                .input-field.col.s9
+                    input.validate(type="text", name="comment"  placeholder=" " value=`${oldCompany.comment}` disabled)
+                    label(for="comment") Kommentar
+        //- DET NYE FIRMA
+        form(action="comparecompany", method="post").col.s6
+            h5 Efter
+            .row.small
+                .input-field.col.s9
+                    input.validate(type="text", name="name" placeholder=" " value=`${newCompany.name}` required)
+                    label(for="name") Firma navn
+            .row.small
+                .input-field.col.s4
+                    input.validate(type="text", name="address" placeholder=" " value=`${newCompany.street}`)
+                    label(for="address") Adresse
+                .input-field.col.s3
+                    input.validate(type="text", name="city" placeholder=" " value=`${newCompany.city}`)
+                    label(for="city") By
+                .input-field.col.s2
+                    input.validate(type="text", name="postcode" placeholder=" " value=`${newCompany.post_code}`)
+                    label(for="postcode") Postnummer   
+            .row.small
+                .input-field.col.s6
+                    input.validate(type="text", name="contact" placeholder=" " value=`${newCompany.contact}`)
+                    label(for="contact") Kontaktperson
+                .input-field.col.s3
+                    input.validate(type="text", name="phone" placeholder=" " value=`${newCompany.phone}` required)
+                    label(for="phone") Tlf.
+            .row.small
+                .input-field.col.s9
+                    input.validate(type="text", name="email", placeholder="email@adresse.dk" value=`${newCompany.email}`)
+                    label(for="email") Email
+            .row.small
+                .input-field.col.s4
+                    input.validate(type="text", name="eanno" placeholder=" " value=`${newCompany.eanno}`)
+                    label(for="eanno") EAN 
+                .input-field.col.s1 
+                //- ^ adds 1 column of space 
+                .input-field.col.s4
+                    input.validate(type="text", name="cvr"  placeholder=" " value=`${newCompany.cvr}`)
+                    label(for="cvr") CVR
+            .row.small
+                .input-field.col.s9
+                    input.validate(type="text", name="comment"  placeholder=" " value=`${newCompany.comment}`)
+                    label(for="comment") Kommentar
+                button.btn.waves-effect.waves-light.col.offset.s9(type="submit") Rediger
