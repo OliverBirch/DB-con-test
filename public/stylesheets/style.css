@@ -1,8 +1,10 @@
-:root {
+:root { /* Change Colors Here! */
   --primary-colour: #d71921;
   --secondary-colour: #A0B2C187;
   --tertiary-colour: #2B3942BF;
   --test-colour: #8aafff; /* brugt til inputs lige pt.*/
+  --message-success: rgba(9, 255, 0, 0.438);
+  --message-error: rgba(255, 0, 0, 0.438);
 }
 
 html {
@@ -93,6 +95,11 @@ nav .right{
   filter: brightness(90%);
 }
 
+.btn:focus, .btn-large:focus, .btn-small:focus {
+  background-color: var(--primary-colour);
+  filter: brightness(90%);
+}
+
  /* sætter farven på text-inputs */
  .input-field input[type=text]:focus + label {
   color: var(--test-colour) !important;
@@ -113,4 +120,37 @@ nav .right{
 .input-field input[type=password]:focus {
   border-bottom: 1px solid var(--test-colour) !important;
   box-shadow: 0 1px 0 0 var(--test-colour) !important;
+}
+
+.flash-messages {
+  margin: 5px;
+  min-height: 2em;
+}
+
+.message {
+  border-radius: 5px;
+  width: auto;
+  margin: 4px;
+}
+
+.error {
+  background-color: var(--message-error);
+}
+
+.success {
+  background-color: var(--message-success);
+}
+
+.close {
+  font-size: 0.6rem;
+  float: right;
+  margin-right: 0;
+  margin-left: -24px;
+  cursor: pointer;
+}
+
+.remove-animation {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.23s ease;
 }

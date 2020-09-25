@@ -1,12 +1,10 @@
 extends layout
 
 block content
-    if messages.error 
-        .message.error
-        span= messages.error
+    include flashmessages
     .row.col.s12
         //- DEN GAMLE KURSIST
-        form(action="/", method="post").col.s6
+        form(method="post").col.s6
             h5 Før
             .section Kursistoplysninger
             .row.small
@@ -62,7 +60,7 @@ block content
                     input.validate(type="text" name="company_post_code" placeholder=" " value=`${oldStudent.company_post_code}` disabled)
                     label(for="first_name") Postnummer
         //- DEN NYE KURSIST
-        form(action="compare", method="post").col.s6
+        form(action="comparestudent", method="post").col.s6
             h5 Efter
             .section Kursistoplysninger
             .row.small
@@ -74,7 +72,7 @@ block content
                     label(for="last_name") Efternavn
             .row.small
                 .input-field.col.s4
-                    input.validate(type="text" name="adress" placeholder=" " value=`${newStudent.adress}`)
+                    input.validate(type="text" name="adress" placeholder=" " value=`${newStudent.street}`)
                     label(for="adress") Adresse
                 .input-field.col.s3
                     input.validate(type="text" name="city" placeholder=" " value=`${newStudent.city}`)
@@ -118,5 +116,6 @@ block content
                     input.validate(type="text" name="company_post_code" placeholder=" " value=`${newStudent.company_post_code}`)
                     label(for="first_name") Postnummer
                 button.btn.waves-effect.waves-light.col.offset.s10(type="submit") Opdater
+    .row
 
     

@@ -1,13 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const Student = require('../models/student')
-const { Sequelize, DataTypes } = require('sequelize')
+const Company = require('../models/Company')
+const { check, body, validationResult } = require('express-validator');
 
 const checkIfAuthenticated = require('../middleware/checkAuthenticated')
-const { importStudentByOrderId, createStudentModelFromApi } = require('../middleware/Student')
-const { findOrCreateStudent } = require('../controllers/findOrCreateStudent')
+const { createStudentFromApi, findOrCreateStudent, updateStudent } = require('../controllers/studentcontrollers')
+const { createCompanyFromApi, findOrCreateCompany, updateCompany } = require("../controllers/companycontrollers");
 const { validateAndRedirect } = require('../controllers/validateAndRedirect')
-const { updateStudent } = require('../controllers/updateStudent')
+const { validateStudent } = require('../middleware/student')
 
 const woo = require('../config/woocommerceapi')
 const flash = require('express-flash')
@@ -39,7 +40,6 @@ router.get('/add', checkIfAuthenticated, (req, res) => {
 router.get('/add/approve', checkIfAuthenticated, (req, res) => {
   woo.get('orders/'+req.query.order)
   .then((result) => {
-    console.log(result)
       const student = createStudentModelFromApi(result)
       res.render('approvestudent', {
         user: req.user,
@@ -80,7 +80,7 @@ router.get('/id/:id', checkIfAuthenticated, (req, res) => {
 })
 
 // students/compare GET request
-router.get('/compare', checkIfAuthenticated, (req, res) => {
+router.get('/comparestudent', checkIfAuthenticated, (req, res) => {
   // session vars
   const oldStudent = req.session.oldStudent
   const newStudent = req.session.newStudent
@@ -92,9 +92,22 @@ router.get('/compare', checkIfAuthenticated, (req, res) => {
   })
 })
 
+// Import order from webshop flow: 
+// [Find order] @ students/add => GET import/1, if ALREADY EXISTS in DB => GET /comparecompany => POST /comparecompany 
+// => GET /import/2, if ALREADY EXISTS in DB => GET /comparestudents => POST comparestudents => redirect /students
+
 // students/compare POST request
 // Update student fields
-router.post('/compare', checkIfAuthenticated, (req, res) => {
+router.post('/comparestudent', checkIfAuthenticated, (req, res) => {
+  /*if (!errors.isEmpty()) {
+    res.status(422).json({ errors: errors.array() });
+    return;
+  }*/
+  body('post_code').exists().isPostalCode()
+  console.log(" hej " + req.body.post_code)
+  const errors = validationResult(req).throw()
+  console.log(errors)
+
   const student = Student.findOne({
     where: {
       first_name: req.body.first_name,
@@ -102,11 +115,98 @@ router.post('/compare', checkIfAuthenticated, (req, res) => {
     }
   })
   .then((result) => {
-    updateStudent(result, req)
-    req.flash('error', 'Kursisten blev opdateret!')
+    updateStudent(result, req.body)
+    req.flash('success', 'Kursisten blev opdateret!')
     res.redirect('/students')
+  })
+  .catch((err) => {
+    console.error(err)
+    if(err.message == 'Query was empty'){
+      console.log('There is no changes in the update, lets continue the progress...');
+      res.redirect('/students')
+    }
   })
 })
 
+// Compare Companies routes
+router.get('/comparecompany', checkIfAuthenticated, (req, res) => {
+  // session vars
+  const oldCompany = req.session.oldCompany
+  const newCompany = req.session.newCompany
+
+  res.render('comparecompany', {
+    user: req.user,
+    oldCompany: oldCompany,
+    newCompany: newCompany
+  })
+})
+
+router.post('/comparecompany', checkIfAuthenticated,  (req, res) => {
+  const company = Company.findOne({
+    where: {
+      name: req.body.name,
+    }
+  })
+  .then((result) => {
+    updateCompany(result, req.body)
+    req.flash('success', 'Firmaet blev opdateret!')
+    res.redirect('import/2')
+  })
+  .catch((err) => console.error(err))
+})
+
+// Import order step 1 - GET request ---- Burde være middleware
+router.get('/import/1', (req, res) => { 
+  req.session.query = req.query.order
+  woo.get('orders/' + req.session.query)
+  .then((result) => {
+    const successRedirectPath = '/import/2'
+    const company = createCompanyFromApi(result)
+    const instance = findOrCreateCompany(company)
+    instance.then(([instance, wasCreated]) => {
+      if (wasCreated === true) {
+        req.flash('success', 'Firmaet blev oprettet!')
+        validateAndRedirect(wasCreated, req, res, successRedirectPath)
+      } else {
+        req.session.oldCompany = instance
+        req.session.newCompany = company
+        req.flash('error', 'Firmaet eksisterer allerede i databasen')
+        res.redirect('/students/comparecompany') 
+      }
+    }).catch((err) => console.error(err))
+  .catch((err) => {
+    res.send(`Der findes ingen ordre med ordrenummer: ${req.query.order}`)
+    err.res
+  })
+  })
+})
+
+//Import order step 2 - GET request -- Burde være middleware
+router.get('/import/2', (req, res) => {
+  const orderId = req.session.query
+  req.session.query = null
+  console.log(orderId)
+  woo.get('orders/' + orderId)
+  .then((result) => {
+    const student = createStudentFromApi(result)
+    const instance = findOrCreateStudent(student)
+    instance.then(([instance, wasCreated]) => {
+      console.log(wasCreated)
+      if (wasCreated === true) {
+        req.flash('success', 'firmaet blev oprettet!')
+        validateAndRedirect(wasCreated, req, res, redirectPath)
+      } else {
+        req.session.oldStudent = instance
+        req.session.newStudent = student
+        req.flash('error', 'Kursisten eksisterer allerede i databasen')
+        res.redirect('/students/comparestudent') 
+      }
+    }).catch((err) => console.error(err))
+    .catch((err) => {
+      console.error(err)
+      res.send(`Der findes ingen ordre med ordrenummer: ${req.query.order}`)
+    })
+  })
+})
 
 module.exports = router;

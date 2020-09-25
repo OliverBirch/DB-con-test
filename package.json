@@ -14,15 +14,13 @@
     "express": "^4.16.4",
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",
+    "express-validator": "^6.6.1",
     "http-errors": "^1.6.3",
-    "jade": "^1.11.0",
-    "jquery": "^3.5.1",
-    "jsdom": "^16.4.0",
     "materialize-css": "^1.0.0-rc.2",
     "morgan": "^1.9.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.4",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
@@ -31,8 +29,6 @@
     "request": "^2.88.2",
     "sequelize": "^6.3.4",
     "sequelize-auto": "^0.5.3",
-    "sqlite": "^4.0.14",
-    "sqlite3": "^5.0.0",
     "woocommerce-api": "^1.5.0"
   }
 }

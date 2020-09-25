@@ -4,7 +4,7 @@ const flash = require('express-flash')
 function validateAndRedirect(wasCreated, req, res, path) {
     req.session.wascreated = wasCreated
     if (wasCreated == true) {
-        req.flash('error', 'Kursisten blev tilføjet')
+        req.flash('error', 'Tilføjet!')
         res.redirect(`${path}`)
     } else if (wasCreated == false) {
         res.redirect(`${path}`)

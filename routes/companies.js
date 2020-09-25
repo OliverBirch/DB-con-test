@@ -8,14 +8,13 @@ const checkIfAuthenticated = require('../middleware/checkAuthenticated')
 
 //Middleware & Controllers
 const { getAllCompanies } = require('../middleware/companies');
-const { findOrCreateCompany } = require("../controllers/findOrCreateCompany");
+const { findOrCreateCompany } = require("../controllers/companycontrollers");
 const { validateAndRedirect } = require('../controllers/validateAndRedirect')
 
 // GET request to /companies 
 router.get('/', getAllCompanies, checkIfAuthenticated, function(req, res) {
 	const boolean = req.session.wascreated
 	req.session.wascreated = null
-
 	res.render('companies', {
 		title: 'Firmaer',
 		user: req.user,
@@ -34,9 +33,15 @@ router.get('/add', checkIfAuthenticated, (req, res) => {
 // POST request to /companies/add
 router.post('/', checkIfAuthenticated, (req, res) => {
 	const redirectPath = 'companies'
-	let instance = findOrCreateCompany(req)
+	let instance = findOrCreateCompany(req.body)
 	instance.then(([instance, wasCreated]) => {
-		validateAndRedirect(wasCreated, req, res, redirectPath)
+		if (wasCreated) {
+			req.flash('success', 'Firmaet blev tilføjet!')
+			res.redirect('companies')
+		} else {
+			req.flash('error', 'Dette firma eksisterer allerede')
+			res.redirect(`companies/id/${instance.id}`)
+		}
 	}).catch(err => console.error(err))
 })
 

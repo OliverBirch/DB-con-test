@@ -1,4 +1,6 @@
 const Company = require('../models/company')
+const expressValidator = require('express-validator')
+
 
 module.exports = {
     async getAllCompanies(req, res, next) {
@@ -9,5 +11,6 @@ module.exports = {
             console.error(error)
         }
     },
+    
 } 
 

@@ -6,14 +6,12 @@ block content
         .card.col.offset-s3.s6.center
             .card-content
                 h4.center Log ind
-                if messages.error 
-                    .message.error
-                    span= messages.error
+                include flashmessages
                 form(action="/", method="post").login-form
                     .input-field.col.s12
-                        input(type="text" name="username")
+                        input(type="text" name="username" required)
                         label(for="username") Brugernavn
                     .input-field.col.s12
-                        input(type="password" name="password")
+                        input(type="password" name="password" required)
                         label(for="password") Password
                     button.btn(type="submit") login

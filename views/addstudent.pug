@@ -3,17 +3,16 @@ extends layout
 block content
     title= title
     h2= title
+    include flashmessages
     .section 
         .card
             .card-content 
-                if messages.error 
-                    p= messages.error
-                p Find kursist fra webshop
+                p Importer ordre fra shop
                 br
-                form(action="add/approve", method="get").col.s12
+                form(action="import/1", method="get").col.s12
                     .row.vertical-align
                         .input-field.inline.col
-                            input(type="text" name="order" placeholder=" ")
+                            input(type="text" name="order" placeholder=" " required)
                             label(for="order") Ordrenummer
                         button(type="submit").btn.waves-effect.waves-light Find
     .section

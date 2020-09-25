@@ -1,18 +1,11 @@
 extends layout
 
 block content
-  //- var wascreated = true
-
+  include flashmessages
   a(href="companies/add").waves-effect.waves-light.btn-small.right.vertical-align
     i.material-icons.large add 
     p Tilføj Firma
   h2= title
-
-  //- Shows a message in response to posting a company to DB @ /companies/add 
-  if wascreated == true
-    .green-text: h6 Firmaet blev tilføjet til databasen! 
-  else if wascreated == false
-    .red-text: h6 Firmaet er allerede tilføjet til databasen
   br
   ul
   each company of companies

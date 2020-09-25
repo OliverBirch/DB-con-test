@@ -35,6 +35,9 @@ const Company = db.define('ksc_company', {
     comment: {
         type: Sequelize.TEXT
     }, 
+    cvr: {
+        type: Sequelize.STRING(255)
+    }
 }, {
     tableName: 'ksc_companies'
 }, {

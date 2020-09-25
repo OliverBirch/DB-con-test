@@ -2701,7 +2701,7 @@ i.left {
 
 i.right {
   float: right;
-  margin-left: 15px;
+  /* margin-left: 15px; */
 }
 
 i.tiny {
